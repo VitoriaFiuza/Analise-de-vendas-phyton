@@ -28,7 +28,6 @@ As dependências são:
 - pandas
 - numpy
 - matplotlib
-- seaborn
 - openpyxl
 
 ## Como Executar
