@@ -113,8 +113,8 @@ def main():
     exploratory_analysis(cleaned_df)
     
     # Salvar dataset limpo como Excel
-    cleaned_df.to_excel('cleaned_sales_data.xlsx', index=False)
-    print("\nDataset limpo salvo como 'cleaned_sales_data.xlsx'")
+    cleaned_df.to_excel('dados_de_vendas.xlsx', index=False)
+    print("\nDataset limpo salvo como 'dados_de_vendas.xlsx'")
     print("Gráficos salvos como arquivos PNG")
 
 if __name__ == "__main__":
