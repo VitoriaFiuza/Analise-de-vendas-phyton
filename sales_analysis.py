@@ -67,7 +67,7 @@ def exploratory_analysis(df):
     plt.xlabel('Categoria')
     plt.ylabel('Receita Total ($)')
     plt.tight_layout()
-    plt.savefig('revenue_by_category.png')
+    plt.savefig('vendas_por_categoria.png')
     plt.close()
     
     # Visualização 2: Tendência de vendas ao longo do tempo
@@ -80,7 +80,7 @@ def exploratory_analysis(df):
     plt.ylabel('Receita Total ($)')
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.savefig('monthly_sales_trend.png')
+    plt.savefig('tendencia_de_vendas_por_mes.png')
     plt.close()
     
     # Visualização 3: Distribuição de preços por produto
@@ -93,7 +93,7 @@ def exploratory_analysis(df):
     plt.ylabel('Frequência')
     plt.legend()
     plt.tight_layout()
-    plt.savefig('price_distribution.png')
+    plt.savefig('distribuicao_de_preco.png')
     plt.close()
     
     # Visualização 4: Vendas por região
@@ -101,7 +101,7 @@ def exploratory_analysis(df):
     df.groupby('region')['quantity'].sum().plot(kind='pie', autopct='%1.1f%%')
     plt.title('Distribuição de Quantidade Vendida por Região')
     plt.tight_layout()
-    plt.savefig('sales_by_region.png')
+    plt.savefig('vendas_por_regiao.png')
     plt.close()
 
 # 4. Função principal
