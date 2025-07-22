@@ -69,7 +69,7 @@ O arquivo `cleaned_sales_data.xlsx` contém o dataset limpo com as seguintes col
 - Para personalizar os produtos ou análises, edite a lista de produtos na seção de criação do dataset ou adicione novas visualizações na função `exploratory_analysis`.
 
 ## Autor
-[Seu Nome] (https://github.com/seu-usuario)
+Vitoria (https://github.com/seu-usuario)
 
 ## Licença
 Este projeto está licenciado sob a [MIT License](LICENSE).
