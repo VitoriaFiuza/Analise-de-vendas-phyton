@@ -10,8 +10,8 @@ plt.style.use('seaborn-v0_8')  # Estilo compatível com Matplotlib recente
 data = {
     'order_id': range(1, 101),
     'date': pd.date_range(start='2024-01-01', periods=100, freq='D'),
-    'produto': np.random.choice(['Notebook Samsung', 'Celular samsung', 'Tablet Apple', 'Fone'], 100),
-    'category': np.random.choice(['Electronicos', 'Accessorios'], 100),
+    'produto': np.random.choice(['Notebook Samsung', 'Celular Samsung', 'Tablet Apple', 'Fones'], 100),
+    'category': np.random.choice(['Electronics', 'Accessories'], 100),
     'price': np.random.uniform(50, 2000, 100).round(2),
     'quantity': np.random.randint(1, 5, 100).astype(float),  # Converter para float
     'customer_id': np.random.randint(1000, 1100, 100),
@@ -67,7 +67,7 @@ def exploratory_analysis(df):
     plt.xlabel('Categoria')
     plt.ylabel('Receita Total ($)')
     plt.tight_layout()
-    plt.savefig('vendas_por_categoria.png')
+    plt.savefig('revenue_by_category.png')
     plt.close()
     
     # Visualização 2: Tendência de vendas ao longo do tempo
@@ -80,29 +80,37 @@ def exploratory_analysis(df):
     plt.ylabel('Receita Total ($)')
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.savefig('tendencia_de_vendas_por_mes.png')
+    plt.savefig('monthly_sales_trend.png')
     plt.close()
     
-    # Visualização 3: Distribuição de preços por produto
-    plt.figure(figsize=(10, 6))
-    for produto in df['produto'].unique():
-        product_data = df[df['produto'] == produto]
-        plt.hist(product_data['price'], bins=20, alpha=0.5, label=produto)
-    plt.title('Distribuição de Preços por Produto')
-    plt.xlabel('Preço ($)')
-    plt.ylabel('Frequência')
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig('distribuicao_de_preco.png')
-    plt.close()
+    # Visualização 3: Distribuição de preços por produto (subplots alinhados mas independentes)
+products = df['produto'].unique()
+n_products = len(products)
+
+# Criar figura com subplots
+fig, axes = plt.subplots(n_products, 1, figsize=(12, 5 * n_products), sharex=False)  # sharex=False para liberdade nos eixos
+colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4']
+
+# Definir bins consistentes para todos os produtos (opcional)
+bins = np.linspace(df['price'].min(), df['price'].max(), 15)  # 15 bins com mesmo intervalo
+
+for ax, product, color in zip(axes, products, colors):
+    product_data = df[df['produto'] == product]
+    ax.hist(product_data['price'], bins=bins, color=color, alpha=0.7, edgecolor='black', linewidth=1.2)
+    ax.set_title(f'Distribuição de Preços - {product}', fontsize=12, pad=10)
+    ax.set_ylabel('Frequência', fontsize=10)
+    ax.set_xlabel('Preço ($)', fontsize=10)
+    ax.grid(True, linestyle='--', alpha=0.5)
+    ax.tick_params(axis='both', labelsize=9)
     
-    # Visualização 4: Vendas por região
-    plt.figure(figsize=(10, 6))
-    df.groupby('region')['quantity'].sum().plot(kind='pie', autopct='%1.1f%%')
-    plt.title('Distribuição de Quantidade Vendida por Região')
-    plt.tight_layout()
-    plt.savefig('vendas_por_regiao.png')
-    plt.close()
+    # Destacar média com linha vertical
+    mean_price = product_data['price'].mean()
+    ax.axvline(mean_price, color='red', linestyle='--', linewidth=1.5, label=f'Média: ${mean_price:.2f}')
+    ax.legend()
+
+plt.tight_layout()
+plt.savefig('price_distribution_subplots.png', dpi=300, bbox_inches='tight')
+plt.close()
 
 # 4. Função principal
 def main():
@@ -113,8 +121,8 @@ def main():
     exploratory_analysis(cleaned_df)
     
     # Salvar dataset limpo como Excel
-    cleaned_df.to_excel('dados_de_vendas.xlsx', index=False)
-    print("\nDataset limpo salvo como 'dados_de_vendas.xlsx'")
+    cleaned_df.to_excel('cleaned_sales_data.xlsx', index=False)
+    print("\nDataset limpo salvo como 'cleaned_sales_data.xlsx'")
     print("Gráficos salvos como arquivos PNG")
 
 if __name__ == "__main__":
